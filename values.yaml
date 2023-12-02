@@ -1,0 +1,11 @@
+container:
+  port: 8080
+deployment:
+  name: spring-app-deployment
+  replicas: 3
+image:
+  repository: akshathphillipspersonal/swe645-hw3
+  tag: v6
+service:
+  name: spring-app-service
+  port: 8080

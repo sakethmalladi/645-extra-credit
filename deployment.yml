@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: '{{ .Values.deployment.name }}'
+spec:
+  replicas: '{{ .Values.deployment.replicas }}'
+  selector:
+    matchLabels:
+      app: spring-app
+  template:
+    metadata:
+      labels:
+        app: spring-app
+    spec:
+      containers:
+      - image: '{{ .Values.image.repository }}:{{ .Values.image.tag }}'
+        name: spring-app-container
+        ports:
+        - containerPort: '{{ .Values.container.port }}'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: '{{ .Values.service.name }}'
+spec:
+  ports:
+  - port: '{{ .Values.service.port }}'
+    protocol: TCP
+    targetPort: '{{ .Values.container.port }}'
+  selector:
+    app: spring-app
+  type: NodePort
